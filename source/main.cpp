@@ -1,3 +1,4 @@
+#include "lexer.hpp"
 #include "util.hpp"
 
 int main(int argc, char *argv[]) {
@@ -5,6 +6,11 @@ int main(int argc, char *argv[]) {
    std::string code = argv[1];
    readIntoStringIfFileExists(code);
    
-   printn(code);
+   Lexer lexer (code);
+   std::vector<Token> &tokens = lexer.lex();
+
+   for (const Token &token: tokens) {
+      printfn("LEXEME: {}, TYPE: {}, LINE: {}.", token.lexeme, tokenTypeToString(token.type), token.line);
+   }
    return 0;
 }
