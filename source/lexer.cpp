@@ -61,9 +61,17 @@ std::vector<Token> &Lexer::lex() {
          tokens.push_back(Token{string, TokenType::string, originalLine});
       }
 
-      // Lex numbers
-      else if (std::isdigit(ch)) {
+      // Lex numbers (including negative)
+      else if (std::isdigit(ch) || ch == '-') {
          std::string number;
+         if (ch == '-' && !std::isdigit(advance())) {
+            index -= 1;
+            goto LEX_IDENTIFIER;
+         } else if (ch == '-') {
+            number += '-';
+            ch = current(); // wtf dude
+         }
+
          bool dot = false;
          bool lastDash = false;
 
@@ -89,7 +97,7 @@ std::vector<Token> &Lexer::lex() {
       }
 
       // Lex identifiers
-      else {
+      else LEX_IDENTIFIER: {
          std::string identifier;
          for (; index < code.size() && ch != '"' && ch != '\'' && ch != ';' && ch != '(' && ch != ')' && !std::isspace(ch); ch = advance())
             identifier += ch;
