@@ -7,11 +7,14 @@
 enum class TokenType: char {
    leftParen,
    rightParen,
+   leftBracket,
+   rightBracket,
    number,
    integer,
    character,
    string,
-   identifier
+   identifier,
+   eof,
 };
 
 struct Token {

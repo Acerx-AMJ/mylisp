@@ -1,4 +1,5 @@
 #include "lexer.hpp"
+#include "parser.hpp"
 #include "util.hpp"
 
 int main(int argc, char *argv[]) {
@@ -9,8 +10,18 @@ int main(int argc, char *argv[]) {
    Lexer lexer (code);
    std::vector<Token> &tokens = lexer.lex();
 
-   for (const Token &token: tokens) {
-      printfn("LEXEME: {}, TYPE: {}, LINE: {}.", token.lexeme, tokenTypeToString(token.type), token.line);
+   // // Print the tokens
+   // for (const Token &token: tokens) {
+   //    printfn("LEXEME: {}, TYPE: {}, LINE: {}.", token.lexeme, tokenTypeToString(token.type), token.line);
+   // }
+
+   Parser parser (tokens);
+   ASTTree &tree = parser.parse();
+
+   // Print the AST tree
+   for (int i = 0; i < tree.program.program.size(); ++i) {
+      printn(stmtToString(tree, tree[tree.program.program[i]]));
    }
+
    return 0;
 }

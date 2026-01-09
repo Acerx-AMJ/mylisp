@@ -6,11 +6,12 @@
 
 static inline const std::unordered_map<char, char> escapeCodeMap {
    {'a', '\a'}, {'b', '\b'}, {'t', '\t'}, {'n', '\n'}, {'v', '\v'}, {'f', '\f'},
-   {'r', '\r'}, {'e', '\e'}, {'\\', '\\'}, {'\'', '\''}, {'"', '"'}
+   {'r', '\r'}, {'e', '\e'}, {'\\', '\\'}, {'\'', '\''}, {'"', '"'},
 };
 
 static inline const char * const tokenTypeStrings[] = {
-   "Left Parenthesis", "Right Parenthesis", "Number", "Integer", "Character", "String", "Identifier"
+   "Left Parenthesis", "Right Parenthesis", "Left Bracket", "Right Bracket",
+   "Number", "Integer", "Character", "String", "Identifier", "End Of File",
 };
 
 // Lex the code
@@ -36,6 +37,14 @@ std::vector<Token> &Lexer::lex() {
 
       else if (ch == ')') {
          tokens.push_back(Token{")", TokenType::rightParen, line});
+      }
+
+      else if (ch == '[') {
+         tokens.push_back(Token{"[", TokenType::leftBracket, line});
+      }
+
+      else if (ch == ']') {
+         tokens.push_back(Token{"]", TokenType::rightBracket, line});
       }
 
       // Lex characters
@@ -105,6 +114,8 @@ std::vector<Token> &Lexer::lex() {
          index -= 1;
       }
    }
+
+   tokens.push_back(Token{"EOF", TokenType::eof, line});
    return tokens;
 }
 
