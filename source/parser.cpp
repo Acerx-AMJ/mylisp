@@ -98,7 +98,7 @@ StmtId Parser::parsePrimaryStmt() {
    case TokenType::leftParen: {
       size_t originalLine = token.line;
       index += 1;
-      ProgramStmt stmt;
+      ProgramStmt stmt {.line = originalLine};
 
       while (!is(TokenType::eof) && !is(TokenType::rightParen))
          stmt.program.push_back(parsePrimaryStmt());
@@ -111,7 +111,7 @@ StmtId Parser::parsePrimaryStmt() {
    case TokenType::leftBracket: {
       size_t originalLine = token.line;
       index += 1;
-      ListStmt stmt;
+      ListStmt stmt {.line = originalLine};
 
       while (!is(TokenType::eof) && !is(TokenType::rightBracket))
          stmt.list.push_back(parsePrimaryStmt());
@@ -122,7 +122,7 @@ StmtId Parser::parsePrimaryStmt() {
    } break;
 
    case TokenType::number: {
-      NumberStmt stmt;
+      NumberStmt stmt {.line = token.line};
       try {
          stmt.number = std::stold(token.lexeme);
       } catch (...) {
@@ -134,7 +134,7 @@ StmtId Parser::parsePrimaryStmt() {
    } break;
 
    case TokenType::integer: {
-      IntegerStmt stmt;
+      IntegerStmt stmt {.line = token.line};
       try {
          stmt.number = std::stol(token.lexeme);
       } catch (...) {
@@ -146,7 +146,7 @@ StmtId Parser::parsePrimaryStmt() {
    } break;
 
    case TokenType::character: {
-      CharStmt stmt;
+      CharStmt stmt {.line = token.line};
       stmt.character = token.lexeme.front();
 
       index += 1;
@@ -154,7 +154,7 @@ StmtId Parser::parsePrimaryStmt() {
    } break;
 
    case TokenType::string: {
-      StringStmt stmt;
+      StringStmt stmt {.line = token.line};
       stmt.string = token.lexeme;
 
       index += 1;
@@ -162,7 +162,7 @@ StmtId Parser::parsePrimaryStmt() {
    } break;
 
    case TokenType::identifier: {
-      IdentifierStmt stmt;
+      IdentifierStmt stmt {.line = token.line};
       stmt.identifier = token.lexeme;
 
       index += 1;

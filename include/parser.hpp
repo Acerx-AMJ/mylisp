@@ -12,30 +12,37 @@ using StmtId = size_t;
 
 struct IdentifierStmt {
    std::string identifier;
+   size_t line = 0;
 };
 
 struct NumberStmt {
    long double number = 0;
+   size_t line = 0;
 };
 
 struct IntegerStmt {
    long int number = 0;
+   size_t line = 0;
 };
 
 struct CharStmt {
    char character = 0;
+   size_t line = 0;
 };
 
 struct StringStmt {
    std::string string;
+   size_t line = 0;
 };
 
 struct ListStmt {
    std::vector<StmtId> list;
+   size_t line = 0;
 };
 
 struct ProgramStmt {
    std::vector<StmtId> program;
+   size_t line = 0;
 };
 
 using Stmt = std::variant<
