@@ -19,6 +19,10 @@ struct StmtStringVisitor {
       return "Character Statement";
    }
 
+   const char *operator () (const BoolStmt &kind) const {
+      return "Boolean Statement";
+   }
+
    const char *operator () (const StringStmt &kind) const {
       return "String Statement";
    }
@@ -56,6 +60,10 @@ struct StmtValueStringVisitor {
 
    std::string operator () (const CharStmt &kind) const {
       return "Character: " + std::string(1, kind.character);
+   }
+
+   std::string operator () (const BoolStmt &kind) const {
+      return "Boolean: " + std::string(kind.boolean ? "t" : "nil");
    }
 
    std::string operator () (const StringStmt &kind) const {

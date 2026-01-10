@@ -29,6 +29,11 @@ struct CharStmt {
    size_t line = 0;
 };
 
+struct BoolStmt {
+   bool boolean = false;
+   size_t line = 0;
+};
+
 struct StringStmt {
    std::string string;
    size_t line = 0;
@@ -49,6 +54,7 @@ using Stmt = std::variant<
    struct NumberStmt,
    struct IntegerStmt,
    struct CharStmt,
+   struct BoolStmt,
    struct StringStmt,
    struct ListStmt,
    struct ProgramStmt
